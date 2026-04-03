@@ -1,8 +1,5 @@
-{
-  email {$CADDY_EMAIL}
-}
-
 {$APP_DOMAIN} {
+  email {$CADDY_EMAIL}
   encode zstd gzip
 
   handle_path /api/* {

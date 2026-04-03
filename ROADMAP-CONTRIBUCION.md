@@ -14,6 +14,9 @@ Alinear a cualquier contribuidor para que trabaje con el mismo contexto tecnico 
 - Añadir registro de usuario desde frontend si se quiere demo completa sin seed.
 - Consolidar documentacion tecnica final cuando el codigo quede cerrado.
 
+## Apoyo para despliegue
+- Guia detallada: `DEPLOY-GRATIS-DOMINIO.md`.
+
 ## Fase 1 - Scaffolding
 - Estructura monorepo (`frontend`, `backend`, `docs`).
 - Configurar `.env.example`, `docker-compose.yml` y scripts de build/test.

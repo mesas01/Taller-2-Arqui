@@ -13,7 +13,7 @@ Sistema de gestion de proyectos y tareas basado en estilo Cliente-Servidor.
 
 - `frontend`: aplicacion Next.js
 - `backend`: API REST Express + MongoDB
-- `nginx`: reverse proxy publico
+- `caddy`: reverse proxy publico con HTTPS automatico
 - `docs/adr`: decisiones de arquitectura
 
 ## Requisitos
@@ -25,6 +25,8 @@ Sistema de gestion de proyectos y tareas basado en estilo Cliente-Servidor.
 
 Copiar `.env.example` y ajustar valores si aplica.
 
+Para produccion puedes partir de `.env.production.example`.
+
 ## Acceso publico con dominio
 
 El despliegue productivo usa Caddy como unico punto de entrada con HTTPS automatico.
@@ -34,6 +36,7 @@ El despliegue productivo usa Caddy como unico punto de entrada con HTTPS automat
 - El backend y el frontend no se exponen directamente al exterior.
 - Para usar dominio real, apunta el registro DNS A del dominio a la IP del servidor y define `APP_DOMAIN` en `.env`.
 - Caddy emite y renueva certificados automaticamente si el dominio resuelve hacia el servidor y los puertos 80/443 estan abiertos.
+- Si Oracle o una VPS gratis no te funciona, puedes usar Cloudflare Tunnel como alternativa gratuita para exponer la app con HTTPS sin abrir puertos.
 
 ## Ejecucion local
 
@@ -101,3 +104,7 @@ Con backend apuntando a Mongo activo:
 
 - Ver `ROADMAP-CONTRIBUCION.md`
 - Ver `PROMPT-CHECKLIST-IA.md`
+
+## Guias de despliegue
+
+- Ver `DEPLOY-GRATIS-DOMINIO.md`
