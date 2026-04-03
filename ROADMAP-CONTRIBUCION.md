@@ -7,9 +7,10 @@ Alinear a cualquier contribuidor para que trabaje con el mismo contexto tecnico 
 - Base tecnica completada: monorepo, backend, frontend, Docker y seed.
 - Validaciones ejecutadas: build backend, build frontend y pruebas backend pasan.
 - Demo funcional validada con usuario semilla contra la API local.
+- Despliegue publico reforzado con reverse proxy Caddy y HTTPS automatico por dominio.
 
 ## Siguiente Paso Inmediato
-- Completar ADR-002 y ADR-003.
+- Publicar dominio real y verificar certificados HTTPS en el servidor final.
 - Añadir registro de usuario desde frontend si se quiere demo completa sin seed.
 - Consolidar documentacion tecnica final cuando el codigo quede cerrado.
 
