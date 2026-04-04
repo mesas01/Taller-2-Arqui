@@ -7,18 +7,23 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
+      - name: Decode SSH key
+        run: |
+          echo "${{ secrets.ORACLE_SSH_KEY_B64 }}" | base64 --decode > /tmp/oracle_deploy_key
+          chmod 600 /tmp/oracle_deploy_key
+
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.ORACLE_HOST }}
-          username: ${{ secrets.ORACLE_USER }}
-          key: ${{ secrets.ORACLE_SSH_KEY }}
-          port: 22
-          script: |
+        env:
+          ORACLE_HOST: ${{ secrets.ORACLE_HOST }}
+          ORACLE_USER: ${{ secrets.ORACLE_USER }}
+        run: |
+          ssh -o StrictHostKeyChecking=no -i /tmp/oracle_deploy_key ${ORACLE_USER}@${ORACLE_HOST} '
+            set -e
             cd ~/app
             git pull origin main
             docker compose down
             docker compose up -d --build
-            echo "✅ Deployment completed successfully"
+            echo "Deployment completed successfully"
+          '
