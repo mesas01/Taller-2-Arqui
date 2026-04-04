@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Trigger check
+        run: echo "Triggering deploy test run"
+
       - name: Decode SSH key
         run: |
           echo "${{ secrets.ORACLE_SSH_KEY_B64 }}" | base64 --decode > /tmp/oracle_deploy_key
