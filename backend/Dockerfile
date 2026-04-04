@@ -11,9 +11,9 @@ RUN npm run build
 
 FROM node:20-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV=production
 COPY package*.json ./
-RUN npm install
+RUN npm install --include=dev
+ENV NODE_ENV=production
 COPY --from=builder /app/dist ./dist
 EXPOSE 5000
 CMD ["node", "dist/server.js"]
