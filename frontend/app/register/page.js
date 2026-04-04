@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import api from '../../lib/api';
 import { saveToken } from '../../lib/auth';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -18,11 +18,11 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const { data } = await api.post('/auth/login', form);
+      const { data } = await api.post('/auth/register', form);
       saveToken(data.data.token);
       router.push('/projects');
     } catch (err) {
-      setError(err?.response?.data?.error?.message || 'No se pudo iniciar sesion');
+      setError(err?.response?.data?.error?.message || 'No se pudo crear la cuenta');
     } finally {
       setLoading(false);
     }
@@ -31,9 +31,19 @@ export default function LoginPage() {
   return (
     <main className="mx-auto flex min-h-screen max-w-md items-center px-5">
       <section className="card w-full">
-        <h1 className="mb-2 text-2xl font-semibold text-brand-900">Gestor de Proyectos</h1>
-        <p className="mb-6 text-sm text-slate-600">Inicia sesion para administrar tus proyectos y tareas.</p>
+        <h1 className="mb-2 text-2xl font-semibold text-brand-900">Crear cuenta</h1>
+        <p className="mb-6 text-sm text-slate-600">Registra un usuario nuevo para acceder al gestor de proyectos.</p>
         <form className="space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label className="mb-1 block text-sm font-medium">Nombre</label>
+            <input
+              className="w-full rounded-md border border-slate-300 p-2"
+              type="text"
+              required
+              value={form.name}
+              onChange={(e) => setForm((s) => ({ ...s, name: e.target.value }))}
+            />
+          </div>
           <div>
             <label className="mb-1 block text-sm font-medium">Email</label>
             <input
@@ -50,6 +60,7 @@ export default function LoginPage() {
               className="w-full rounded-md border border-slate-300 p-2"
               type="password"
               required
+              minLength={8}
               value={form.password}
               onChange={(e) => setForm((s) => ({ ...s, password: e.target.value }))}
             />
@@ -60,13 +71,13 @@ export default function LoginPage() {
             disabled={loading}
             type="submit"
           >
-            {loading ? 'Ingresando...' : 'Ingresar'}
+            {loading ? 'Creando cuenta...' : 'Crear cuenta'}
           </button>
         </form>
         <p className="mt-4 text-sm text-slate-600">
-          ¿No tienes cuenta?{' '}
-          <Link className="font-medium text-brand-700 hover:text-brand-900" href="/register">
-            Crear una cuenta
+          ¿Ya tienes cuenta?{' '}
+          <Link className="font-medium text-brand-700 hover:text-brand-900" href="/login">
+            Iniciar sesion
           </Link>
         </p>
       </section>
