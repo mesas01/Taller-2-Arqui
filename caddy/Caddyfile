@@ -1,7 +1,4 @@
 {$APP_DOMAIN} {
-  tls {
-    email {$CADDY_EMAIL}
-  }
   encode zstd gzip
 
   handle_path /api/* {
