@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import AuthGuard from '../../../../components/AuthGuard';
 import api from '../../../../lib/api';
@@ -51,30 +52,40 @@ export default function NewTaskPage() {
 
   return (
     <AuthGuard>
-      <main className="mx-auto max-w-xl px-5 py-8">
-        <section className="card">
-          <h1 className="mb-4 text-2xl font-semibold text-brand-900">Nueva Tarea</h1>
-          <form className="space-y-3" onSubmit={handleSubmit}>
+      <main className="page-shell min-h-screen">
+        <div className="page-glow" aria-hidden="true" />
+        <section className="mx-auto max-w-xl panel">
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-600">Nueva tarea</p>
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">Crear tarea</h1>
+            </div>
+            <Link className="btn-secondary" href={`/projects/${params.id}`}>
+              Volver
+            </Link>
+          </div>
+
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <input
-              className="w-full rounded-md border border-slate-300 p-2"
+              className="input-field"
               placeholder="Titulo de la tarea"
               value={form.title}
               required
               onChange={(e) => setForm((s) => ({ ...s, title: e.target.value }))}
             />
             <select
-              className="w-full rounded-md border border-slate-300 p-2"
+              className="input-field"
               value={form.status}
               onChange={(e) => setForm((s) => ({ ...s, status: e.target.value }))}
             >
-              <option value="todo">todo</option>
-              <option value="in_progress">in_progress</option>
-              <option value="done">done</option>
+              <option value="todo">To-do</option>
+              <option value="in_progress">En progreso</option>
+              <option value="done">Hecha</option>
             </select>
 
-            {error && <p className="text-sm text-red-700">{error}</p>}
+            {error && <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
 
-            <button className="rounded-md bg-brand-700 px-4 py-2 text-white" disabled={loading} type="submit">
+            <button className="btn-primary" disabled={loading} type="submit">
               {loading ? 'Guardando...' : 'Guardar tarea'}
             </button>
           </form>

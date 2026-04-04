@@ -17,5 +17,16 @@ export const taskController = {
     const ownerId = req.user!.userId;
     const tasks = await taskService.listByProject(req.params.id, ownerId);
     return res.status(200).json(ok(tasks));
+  },
+
+  async updateStatus(req: Request, res: Response) {
+    const ownerId = req.user!.userId;
+    const task = await taskService.updateStatus({
+      projectId: req.params.id,
+      taskId: req.params.taskId,
+      ownerId,
+      status: req.body.status
+    });
+    return res.status(200).json(ok(task));
   }
 };

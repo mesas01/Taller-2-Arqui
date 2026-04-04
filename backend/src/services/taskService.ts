@@ -31,5 +31,24 @@ export const taskService = {
     }
 
     return taskRepository.listByProject(projectId);
+  },
+
+  async updateStatus(input: {
+    projectId: string;
+    taskId: string;
+    ownerId: string;
+    status: TaskStatus;
+  }) {
+    const project = await projectService.findByIdAndOwner(input.projectId, input.ownerId);
+    if (!project) {
+      throw new AppError('Project not found', 404);
+    }
+
+    const task = await taskRepository.findByIdAndProject(input.taskId, input.projectId);
+    if (!task) {
+      throw new AppError('Task not found', 404);
+    }
+
+    return taskRepository.updateStatus(input.taskId, input.status);
   }
 };
