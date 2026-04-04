@@ -14,8 +14,9 @@ jobs:
 
       - name: Decode SSH key
         run: |
-          echo "${{ secrets.ORACLE_SSH_KEY_B64 }}" | base64 --decode > /tmp/oracle_deploy_key
+          printf '%s' "${{ secrets.ORACLE_SSH_KEY_B64 }}" | base64 --decode > /tmp/oracle_deploy_key
           chmod 600 /tmp/oracle_deploy_key
+          ssh-keygen -l -f /tmp/oracle_deploy_key
 
       - name: Deploy via SSH
         env:
